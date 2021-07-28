@@ -1,0 +1,11 @@
+name: Manually triggered workflow on other branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Hello"
