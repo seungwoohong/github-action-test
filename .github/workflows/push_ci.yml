@@ -1,0 +1,10 @@
+name: push trigger
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  print_branch_name:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "branch's name is dev"
