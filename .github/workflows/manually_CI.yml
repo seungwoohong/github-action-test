@@ -5,6 +5,7 @@ om:
       tag:
         description: "tag to be deploy"
         require: true
+
 jobs:
   print_tag:
     runs-on: ubuntu-latest
