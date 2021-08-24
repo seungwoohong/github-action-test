@@ -1,0 +1,13 @@
+name: funny comment
+on:
+  push:
+    branches:
+      - "dev"
+
+jobs:
+  comment:
+    if: github.event_name === 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Funny comments
+        uses: Marta83/funny-comment-action@v2.1
