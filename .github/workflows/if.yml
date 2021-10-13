@@ -1,0 +1,17 @@
+name: Workflow with if keyword
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    if: ${{ true }}
+    steps:
+      - run: |
+          echo running job1
+  job2:
+    runs-on: ubuntu-latest
+    if: ${{ false }}
+    steps:
+      - run: |
+          echo running job2
