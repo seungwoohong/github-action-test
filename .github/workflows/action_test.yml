@@ -1,0 +1,22 @@
+name: Action Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test action
+        uses: actions/hello-world-docker-action@master
+        with:
+          who-to-greet: "Mona the Octocat"
+      - name: action has name
+        run: echo hello
+      - run: echo no name
+      - name: greeting
+        uses: actions/hello_world@main
+        with:
+          first_name: Mona
+          middle_name: The
+          last_name: Octocat
