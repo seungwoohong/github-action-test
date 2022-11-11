@@ -25,8 +25,7 @@ jobs:
 
       - name: Create Pull Request
         if: |
-          github.event_name != 'pull_request' &&
-          steps.calibre.outputs.markdown != ''
+          github.event_name != 'pull_request'
         uses: peter-evans/create-pull-request@v3
         with:
           title: Auto Compress Images
