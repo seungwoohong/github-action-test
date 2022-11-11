@@ -8,6 +8,7 @@ on:
       - "**.jpeg"
       - "**.png"
       - "**.webp"
+  workflow_dispatch:
 jobs:
   build:
     name: calibreapp/image-actions
@@ -20,9 +21,15 @@ jobs:
         uses: calibreapp/image-actions@main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: ${{ github.event_name != 'pull_request' }}
 
-      - name: Optimize SVGs
-        uses: ericcornelissen/svgo-action@v3
+      - name: Create Pull Request
+        if: |
+          github.event_name != 'pull_request' &&
+          steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@v3
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          svgo-version: 3
+          title: Auto Compress Images
+          branch-suffix: timestamp
+          commit-message: Compress Images
+          body: ${{ steps.calibre.outputs.markdown }}
