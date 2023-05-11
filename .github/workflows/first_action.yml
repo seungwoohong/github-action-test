@@ -1,0 +1,13 @@
+name: learn-github-actions #1
+on: [push] #2
+
+jobs:
+  check-bats-version: #4
+    runs-on: ubuntu-latest #5
+    steps: #6
+      - uses: actions/checkout@v2 #7
+      - uses: actions/setup-node@v2 #8
+        with: #9
+          node-version: '14' #10
+      - run: npm install -g bats #11
+      - run: bats -v #12
