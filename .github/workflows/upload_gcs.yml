@@ -37,14 +37,19 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_WORKSPACE_MANAGER_KEY }}
 
+      - id: rename-files
+        run: |
+          mv ./translation/en.json ./translation/en_${{github.event.inputs.target}}.json
+          mv ./translation/ko.json ./translation/ko_${{github.event.inputs.target}}.json
+
       - id: "upload-ko-file"
         uses: "google-github-actions/upload-cloud-storage@v2"
         with:
-          path: "./translation/ko.json"
-          destination: "${{vars.STATIC_IMAGE_BUCKET_URL}}/translation/ko_${{github.event.inputs.target}}.json"
+          path: "./translation/ko_${{github.event.inputs.target}}.json"
+          destination: "ez-static-resource/translation"
 
       - id: "upload-en-file"
         uses: "google-github-actions/upload-cloud-storage@v2"
         with:
-          path: "./translation/en.json"
-          destination: "${{vars.STATIC_IMAGE_BUCKET_URL}}/translation/en_${{github.event.inputs.target}}.json"
+          path: "./translation/en_${{github.event.inputs.target}}.json"
+          destination: "ez-static-resource/translation"
