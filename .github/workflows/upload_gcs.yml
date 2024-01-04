@@ -1,0 +1,50 @@
+name: Upload Translation
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "production or staging or develop"
+        required: true
+
+jobs:
+  upload_to_gcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+      - run: pnpm install
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "key.json"
+          json: ${{ secrets.GOOGLE_WORKSPACE_MANAGER_KEY }}
+
+      - name: Set key path
+        run: |
+          echo "TRANSLATIONGEN_PRIVATE_KEY_PATH=./key.json" >> .env
+
+      - name: generate translation
+        run: pnpm tgen
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GOOGLE_WORKSPACE_MANAGER_KEY }}
+
+      - id: "upload-ko-file"
+        uses: "google-github-actions/upload-cloud-storage@v2"
+        with:
+          path: "./translation/ko.json"
+          destination: "${{vars.STATIC_IMAGE_BUCKET_URL}}/translation/ko_${{github.event.inputs.target}}.json"
+
+      - id: "upload-en-file"
+        uses: "google-github-actions/upload-cloud-storage@v2"
+        with:
+          path: "./translation/en.json"
+          destination: "${{vars.STATIC_IMAGE_BUCKET_URL}}/translation/en_${{github.event.inputs.target}}.json"

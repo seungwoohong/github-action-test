@@ -1,0 +1,6 @@
+target: https://docs.google.com/spreadsheets/d/1aRNHQFk61mGQ151008UzPXxsAsGIivtiG8U8xlJatRI/edit#gid=0
+serviceAccount: google-workspace-manager@easy-wms.iam.gserviceaccount.com
+output: "./translation"
+locales: ["ko", "en"]
+sheet: "translation"
+sheetId: 1aRNHQFk61mGQ151008UzPXxsAsGIivtiG8U8xlJatRI
