@@ -4,3 +4,4 @@ output: "./translation"
 locales: ["ko", "en"]
 sheet: "translation"
 sheetId: 1aRNHQFk61mGQ151008UzPXxsAsGIivtiG8U8xlJatRI
+depthSeparator: $

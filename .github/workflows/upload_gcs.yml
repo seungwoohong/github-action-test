@@ -39,17 +39,10 @@ jobs:
 
       - id: rename-files
         run: |
-          mv ./translation/en.json ./translation/en_${{github.event.inputs.target}}.json
-          mv ./translation/ko.json ./translation/ko_${{github.event.inputs.target}}.json
+          cp -r ./translation ./${{github.event.inputs.target}}/
 
       - id: "upload-ko-file"
         uses: "google-github-actions/upload-cloud-storage@v2"
         with:
-          path: "./translation/ko_${{github.event.inputs.target}}.json"
-          destination: "ez-static-resource/translation"
-
-      - id: "upload-en-file"
-        uses: "google-github-actions/upload-cloud-storage@v2"
-        with:
-          path: "./translation/en_${{github.event.inputs.target}}.json"
+          path: "./${{github.event.inputs.target}}"
           destination: "ez-static-resource/translation"

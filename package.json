@@ -22,6 +22,6 @@
     "@actions/github": "^5.1.1"
   },
   "devDependencies": {
-    "translation-gen": "^0.1.4"
+    "translation-gen": "^0.1.5"
   }
 }
