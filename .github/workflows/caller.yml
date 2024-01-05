@@ -15,8 +15,7 @@ jobs:
         with:
           files: |
             src/locales/translation/**
-      - name: Print files that have changed
+      - uses: ./.github/workflows/upload_gcs.yml
         if: steps.changed-files.outputs.any_changed == 'true'
-        uses: ./.github/workflows/upload_gcs.yml
         with:
           target: develop
