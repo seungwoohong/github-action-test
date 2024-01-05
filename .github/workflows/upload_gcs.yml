@@ -1,5 +1,8 @@
 name: Upload Translation
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       target:
@@ -46,3 +49,14 @@ jobs:
         with:
           path: "./${{github.event.inputs.target}}"
           destination: "ez-static-resource/translation"
+
+      - name: Get all translation files that have changed
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            src/locales/translation/**
+      - name: Print files that have changed
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "translation files was changed"
