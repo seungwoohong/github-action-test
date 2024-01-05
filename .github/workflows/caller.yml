@@ -1,0 +1,22 @@
+name: Caller
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload_to_gcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get all translation files that have changed
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            src/locales/translation/**
+      - name: Print files that have changed
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: ./.github/workflows/upload_gcs.yml
+        with:
+          target: develop

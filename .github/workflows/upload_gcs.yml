@@ -1,13 +1,17 @@
 name: Upload Translation
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       target:
         description: "production or staging or develop"
         required: true
+
+  workflow_call:
+    inputs:
+      target:
+        description: "production or staging or develop"
+        required: true
+        type: string
 
 jobs:
   upload_to_gcs:
