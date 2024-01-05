@@ -15,7 +15,12 @@ jobs:
         with:
           files: |
             src/locales/translation/**
-      - uses: ./.github/workflows/upload_gcs.yml
-        if: steps.changed-files.outputs.any_changed == 'true'
-        with:
-          target: develop
+    outputs:
+      translation_changed: ${{steps.changed-files.outputs.any_changed}}
+
+  upload_translation:
+    needs: [upload_to_gcs]
+    if: ${{needs.upload_to_gcs.outputs.translation_changed}} == 'true'
+    uses: ./.github/workflows/upload_gcs.yml
+    with:
+      target: develop
